@@ -1,0 +1,237 @@
+{
+  "stats": {
+    "suites": 4,
+    "tests": 4,
+    "passes": 2,
+    "pending": 0,
+    "failures": 2,
+    "start": "2023-10-27T15:10:40.700Z",
+    "end": "2023-10-27T15:10:40.727Z",
+    "duration": 27,
+    "testsRegistered": 4,
+    "passPercent": 50,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "4bf47845-108f-4283-ac5c-53db440bc032",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "36e0ffbf-f65d-4c1c-b100-13abe069afb9",
+          "title": "Test: index001",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Test: index001",
+              "fullTitle": "Test: index001 Test: index001",
+              "timedOut": false,
+              "duration": 0,
+              "state": "failed",
+              "speed": "fast",
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "",
+              "err": {
+                "message": "TypeError: Cannot read properties of undefined (reading 'call')",
+                "estack": "TypeError: Cannot read properties of undefined (reading 'call')\n    at process.processImmediate (node:internal/timers:476:21)",
+                "diff": null
+              },
+              "uuid": "fdfa965e-01da-4547-a1ec-6f7a4124c749",
+              "parentUUID": "36e0ffbf-f65d-4c1c-b100-13abe069afb9",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "fdfa965e-01da-4547-a1ec-6f7a4124c749"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "36e0ffbf-f65d-4c1c-b100-13abe069afb9",
+          "title": "Test: index001",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Test: index001",
+              "fullTitle": "Test: index001 Test: index001",
+              "timedOut": false,
+              "duration": 0,
+              "state": "failed",
+              "speed": "fast",
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "",
+              "err": {
+                "message": "TypeError: Cannot read properties of undefined (reading 'call')",
+                "estack": "TypeError: Cannot read properties of undefined (reading 'call')\n    at process.processImmediate (node:internal/timers:476:21)",
+                "diff": null
+              },
+              "uuid": "fdfa965e-01da-4547-a1ec-6f7a4124c749",
+              "parentUUID": "36e0ffbf-f65d-4c1c-b100-13abe069afb9",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "fdfa965e-01da-4547-a1ec-6f7a4124c749"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "37d016aa-467d-4885-a1f3-5083ef3fac75",
+          "title": "Test: index004",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Test: index004",
+              "fullTitle": "Test: index004 Test: index004",
+              "timedOut": false,
+              "duration": 0,
+              "state": "failed",
+              "speed": "fast",
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "",
+              "err": {
+                "message": "TypeError: Cannot read properties of undefined (reading 'call')",
+                "estack": "TypeError: Cannot read properties of undefined (reading 'call')\n    at process.processImmediate (node:internal/timers:476:21)",
+                "diff": null
+              },
+              "uuid": "0749ce5a-c789-4c65-84fc-ec9e8c4b9ad6",
+              "parentUUID": "37d016aa-467d-4885-a1f3-5083ef3fac75",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "0749ce5a-c789-4c65-84fc-ec9e8c4b9ad6"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "37d016aa-467d-4885-a1f3-5083ef3fac75",
+          "title": "Test: index004",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Test: index004",
+              "fullTitle": "Test: index004 Test: index004",
+              "timedOut": false,
+              "duration": 0,
+              "state": "failed",
+              "speed": "fast",
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "",
+              "err": {
+                "message": "TypeError: Cannot read properties of undefined (reading 'call')",
+                "estack": "TypeError: Cannot read properties of undefined (reading 'call')\n    at process.processImmediate (node:internal/timers:476:21)",
+                "diff": null
+              },
+              "uuid": "0749ce5a-c789-4c65-84fc-ec9e8c4b9ad6",
+              "parentUUID": "37d016aa-467d-4885-a1f3-5083ef3fac75",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "0749ce5a-c789-4c65-84fc-ec9e8c4b9ad6"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "index-2023-10-27_18-10-39",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "C:\\Users\\user\\Desktop\\autoTest\\Radist Online\\AutoTestEnterButtons\\test-results",
+        "reportFilename": "index-2023-10-27_18-10-39",
+        "reportTitle": "Test Report"
+      },
+      "version": "6.2.0"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "scripts": {
+        "test": "mocha test.js"
+    },
+    "devDependencies": {
+        "@wdio/allure-reporter": "^7.33.0",
+        "mochawesome": "^7.1.3"
+    },
+    "dependencies": {
+        "moment-timezone": "^0.5.43",
+        "puppeteer": "^21.4.1"
+    }
+}
