@@ -18,27 +18,19 @@ async function run() {
         await driver.findElement(By.css("#settings")).click();
         await driver.findElement(By.css("a[href='/companies/1/settings/company_settings']")).click();
         await driver.findElement(By.css(".dropdownContainer__dropdown_placeholder.selected")).click();
-        let dropdownItems = await driver.findElements(By.css(".dropdownContainer__dropdown_content"));
-        // Проверка, с каким индексом (0 или 1) выбран элемент
-        let selectedElementIndex = -1;
-        for (let i = 0; i < dropdownItems.length; i++) {
-            let isSelected = await dropdownItems[i].isSelected();
-            if (isSelected) {
-                selectedElementIndex = i;
-                break;
-            }
-        }
-        if (selectedElementIndex === 0) {
-            await dropdownItems[0].click();
-        } else {
-            await dropdownItems[1].click();
-        }
-
-
-        // const textAreaElements = await driver.findElements(By.css(".dropdownContainer__dropdown_content__item"));
-        // await textAreaElements[1].click();
-
-        await driver.sleep(2000);
+        let dropdownItems = await driver.findElements(By.css(".dropdownContainer__dropdown_content__item"));
+       
+       // Проверка, с каким индексом (0 или 1) выбран элемент
+       let selectedElementIndex = -1;
+       if (fs.existsSync('selectedElement.txt')) {
+         selectedElementIndex = parseInt(fs.readFileSync('selectedElement.txt', 'utf8'));
+       }       
+       // Клик на элемент с другим индексом
+       let targetIndex = selectedElementIndex === 0 ? 1 : 0;
+       await dropdownItems[targetIndex].click();       
+       // Сохранение индекса выбранного элемента в файл
+       fs.writeFileSync('selectedElement.txt', targetIndex.toString());
+        await driver.sleep(1000);
         await takeScreenshot(driver, './screenshots/companySettings010.png');
     } finally {
         await driver.quit();
