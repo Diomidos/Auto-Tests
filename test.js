@@ -1,10 +1,10 @@
-
 const Mocha = require('mocha');
 const glob = require('glob');
 const path = require('path');
 const moment = require('moment');
+const fs = require('fs');
 
-// Получение текущей даыу и времени в формате, которое можно использовать в имени файла
+// Получение текущей даты и времени в формате, которое можно использовать в имени файла
 const reportName = moment().format('YYYY-MM-DD_HH-mm-ss');
 
 // Создание нового экземпляра Mocha с дополнительными параметрами
@@ -19,6 +19,22 @@ const mocha = new Mocha({
 
 // Получение всех файлов тестов с помощью glob
 const testFiles = glob.sync('workingTest/*.js');
+
+// Функция для очистки старых файлов в папке test-results
+function cleanTestResults() {
+  const testResultsPath = path.join(__dirname, 'test-results');
+  const files = fs.readdirSync(testResultsPath);
+
+  files.forEach((file) => {
+    if (file.startsWith('index-') && file !== `index-${reportName}.json`) {
+      const filePath = path.join(testResultsPath, file);
+      fs.unlinkSync(filePath);
+    }
+  });
+}
+
+// Вызов функции cleanTestResults перед запуском тестов
+cleanTestResults();
 
 // Добавляем каждый файл теста в Mocha
 testFiles.forEach((file) => {
