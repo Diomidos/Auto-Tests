@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "test": "mocha test.js"
+        "test": "mocha test.js",
+        "dev": "nodemon test.js"
     },
     "devDependencies": {
         "@wdio/allure-reporter": "^7.33.0",

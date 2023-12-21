@@ -1,4 +1,4 @@
-// Тест 006: Вход. Страница "Подписки". Создание счёта для Юр.лица
+// Тест Вход. Страница "Настройки компании". Смена валюты для оплаты сервиса (подписок)
 const { Builder, By, Key, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs");
@@ -16,17 +16,22 @@ async function run() {
         await driver.findElement(By.id("password")).sendKeys("9ed1bf12-23c2-45fa-a137-4441f9671384", Key.ENTER);
         await driver.wait(until.elementLocated(By.css('#chats')));
         await driver.findElement(By.css("#settings")).click();
-        await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
+        await driver.findElement(By.css("a[href='/companies/1/settings/company_settings']")).click();
+        await driver.findElement(By.css(".dropdownContainer__dropdown_placeholder.selected")).click();
+        let dropdownItems = await driver.findElements(By.css(".dropdownContainer__dropdown_content__item"));
+       
+       // Проверка, с каким индексом (0 или 1) выбран элемент
+       let selectedElementIndex = -1;
+       if (fs.existsSync('selectedElement.txt')) {
+         selectedElementIndex = parseInt(fs.readFileSync('selectedElement.txt', 'utf8'));
+       }       
+       // Клик на элемент с другим индексом
+       let targetIndex = selectedElementIndex === 0 ? 1 : 0;
+       await dropdownItems[targetIndex].click();       
+       // Сохранение индекса выбранного элемента в файл
+       fs.writeFileSync('selectedElement.txt', targetIndex.toString());
         await driver.sleep(1000);
-        await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
-        await driver.sleep(1000);
-        await driver.findElement(By.css('.dropdownContainer__dropdown')).click();
-        const textAreaElements = await driver.findElements(By.css('.dropdownContainer__dropdown_content'));
-        await textAreaElements[0].click();
-        await driver.sleep(1000);
-        await driver.findElement(By.css('.subscriptionsInvoicePay__bottom')).click();
-        await driver.sleep(1000);
-        await takeScreenshot(driver, './screenshots/invoice006.png');
+        await takeScreenshot(driver, './screenshots/companySettings010.png');
     } finally {
         await driver.quit();
     }

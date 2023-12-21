@@ -1,9 +1,8 @@
-// Тест 007: Вход. Страница "Подписки". Создание счёта для оплаты Банковской картой.
-const { Builder, By, Key, until, Button } = require("selenium-webdriver");
+// Тест Вход. Чаты. Поиск контакта. Открытие телега-чата. Отправка текстового сообщения.
+const { Builder, By, Key, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs");
 const path = require("path");
-
 async function run() {
     let driver = await new Builder()
         .forBrowser("chrome")
@@ -16,22 +15,22 @@ async function run() {
         await driver.findElement(By.id("username")).sendKeys("radist@radist.online");
         await driver.findElement(By.id("password")).sendKeys("9ed1bf12-23c2-45fa-a137-4441f9671384", Key.ENTER);
         await driver.wait(until.elementLocated(By.css('#chats')));
-
-        await driver.findElement(By.css("#settings")).click();
-        await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
         await driver.sleep(1000);
-
-        await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
+        await driver.findElement(By.css(".conversationHeader__inputContainer__input")).sendKeys("9274479552");
+        await driver.findElement(By.css(".conversation__content__description_upperBlock__arrowIcon")).click();
         await driver.sleep(1000);
-
-        await driver.findElement(By.css('.subscriptionsInvoicePay__payment')).click();
-        await driver.findElement(By.css("input[value='card']")).click();
+        await driver.findElement(By.css(".conversationChatsList__header_info__name")).click();
         await driver.sleep(1000);
-
-        await driver.findElement(By.css('.subscriptionsInvoicePay__bottom'));
-        await Button.click();
-        await Button.click();
-        await takeScreenshot(driver, './screenshots/invoice007.png');
+        await driver.findElement(By.css(".chatField__container")).click();
+        const textareaField = await driver.findElement(By.css("textarea[placeholder='Сообщение']"));
+        // Кликаем по полю ввода сообщения
+        await textareaField.click();
+        await driver.sleep(1000);
+        // Вводим текст в поле ввода сообщения
+        await textareaField.sendKeys("Привет, это сообщение из авто теста!");
+        await driver.findElement(By.css(".chatField__container__buttonsContainer__rightBlock_sendButton.false")).click();
+        await driver.sleep(1000);
+        await takeScreenshot(driver, './screenshots/chats011.png');
     } finally {
         await driver.quit();
     }

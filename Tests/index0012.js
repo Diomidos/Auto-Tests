@@ -1,4 +1,4 @@
-// Тест 011: Вход. Чаты. Поиск контакта. Открытие телега-чата. Отправка текстового сообщения.
+// Тест Вход. Чаты. Поиск чата по номеру контакта. Клик "Принять оплату". Создание ссылки на оплату.
 const { Builder, By, Key, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs");
@@ -18,19 +18,25 @@ async function run() {
         await driver.sleep(1000);
         await driver.findElement(By.css(".conversationHeader__inputContainer__input")).sendKeys("9274479552");
         await driver.findElement(By.css(".conversation__content__description_upperBlock__arrowIcon")).click();
-        await driver.sleep(1000);
+        // await driver.sleep(1000);
         await driver.findElement(By.css(".conversationChatsList__header_info__name")).click();
         await driver.sleep(1000);
-        await driver.findElement(By.css(".chatField__container")).click();
-        const textareaField = await driver.findElement(By.css("textarea[placeholder='Сообщение']"));
-        // Кликаем по полю ввода сообщения
-        await textareaField.click();
+        await driver.findElement(By.css(".GlobalButton.white.small.isImage")).click();
         await driver.sleep(1000);
-        // Вводим текст в поле ввода сообщения
-        await textareaField.sendKeys("Привет, это сообщение из авто теста!");
-        await driver.findElement(By.css(".chatField__container__buttonsContainer__rightBlock_sendButton.false")).click();
+        await driver.findElement(By.css('.dropdownContainer__dropdown ')).click();
         await driver.sleep(1000);
-        await takeScreenshot(driver, './screenshots/chats011.png');
+        const textAreaElements1 = await driver.findElements(By.css('.dropdownContainer__dropdown_content__item'));
+        await textAreaElements1[5].click();
+        await driver.findElement(By.css(".form-control.inputBill__input_phone")).sendKeys("9274479552");
+        await driver.findElement(By.css(".inputContainer__input.name")).click();
+        await driver.sleep(1000);
+        const textAreaElements2 = await driver.findElements(By.css('.contentList_item'));
+        await textAreaElements2[1].click();
+        await driver.sleep(1000);
+        await driver.findElement(By.css('.chatBillContainer__content_bottom')).click();
+        await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
+        await driver.sleep(1000);
+        await takeScreenshot(driver, './screenshots/invoise012.png');
     } finally {
         await driver.quit();
     }
