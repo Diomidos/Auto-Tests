@@ -84,7 +84,7 @@ async function testSearchContact(driver) {
     await driver.switchTo().window(handles[handles.length - 2]);
 }
 
-// Тест 3 testSortingContact Вход. Страница "Контакты". Сортировка по алфавиту, по времени создания (1.сначало новые; 2.сначала старые; 3.По имени А-Я; 4.По имени Я-А)
+// Тест 3 tetSortingContact Вход. Страница "Контакты". Сортировка по алфавиту, по времени создания (1.сначало новые; 2.сначала старые; 3.По имени А-Я; 4.По имени Я-А)
 async function testSortingContact(driver) {
     await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
     const handles = await driver.getAllWindowHandles();
@@ -132,6 +132,40 @@ async function testSortingContact(driver) {
     await driver.switchTo().window(handles[handles.length - 2]);
 }
 
+// Тест 4 Поиск (фильтр) контактов по тегам
+async function testSearchContactsTags(driver) {
+    await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
+    const handles = await driver.getAllWindowHandles();
+    await driver.switchTo().window(handles[handles.length - 1]);
+    // Логика вашего первого теста testSearchContactsTags
+    await driver.get(
+        "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
+    );
+    await driver.wait(until.elementLocated(By.css("#chats")));
+    await driver.findElement(By.css('#contacts')).click();
+    await driver.sleep(2000);
+    await driver.findElement(By.css('.dropdownWithCheckbox__dropdown')).click();
+    await driver.sleep(1000);
+    const textAreaElements = await driver.findElements(By.css('.dropTag'));
+    // создание массива индексов
+    const indices = [0, 1, 2];
+    // перебор индексов и нажатие на элемент
+    for (const index of indices) {
+        await textAreaElements[index].click();
+    }
+    await driver.findElement(By.css('.dropdownWithCheckbox__dropdown')).click();
+    await driver.sleep(1000);
+    await takeScreenshot(driver, './screenshots/sortingContact_4.png');
+    async function takeScreenshot(driver, filename) {
+        await driver.takeScreenshot().then(function (data) {
+            fs.writeFileSync(filename, data, 'base64');
+        });
+    }
+    // Закрыть текущую вкладку
+    await driver.close();
+    await driver.switchTo().window(handles[handles.length - 2]);
+}
+
 async function main() {
     const options = new chrome.Options();
     // Настройки Chrome WebDriver
@@ -144,7 +178,7 @@ async function main() {
     await testNewContact(driver);
     await testSearchContact(driver);
     await testSortingContact(driver);
-    // await testCompanyCreation(driver);
+    await testSearchContactsTags(driver);
 
     await driver.quit(); // Закрытие браузера после выполнения тестов
 }
