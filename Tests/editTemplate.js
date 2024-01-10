@@ -18,11 +18,10 @@ async function editTemplate() {
         await driver.wait(until.elementLocated(By.css('#chats')));
         await driver.findElement(By.css('#templates')).click();
         await driver.sleep(2000)
-        await driver.findElement(By.css('.cardButtons__list'))
-        const textAreaElements = await driver.findElements(By.css('.cardButtons__list_item'));
+        const textAreaElements = await driver.findElements(By.css('.cardButtons_editButton'));
         await textAreaElements[0].click()
         const textAreaElements1 = await driver.findElements(By.css('.textArea__textarea'));
-        await textAreaElements1[0].sendKeys(" тест 44");
+        await textAreaElements1[0].sendKeys(" тест 44546");
         await driver.sleep(1000);
         await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
         await driver.sleep(1000);

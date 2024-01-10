@@ -16,10 +16,15 @@ async function deleteTemplate() {
         await driver.findElement(By.css("#password")).sendKeys(`${PASSWORD}`, Key.ENTER);
         await driver.wait(until.elementLocated(By.css('#chats')));
         await driver.findElement(By.css('#templates')).click();
-        await driver.sleep(1000)
-        await driver.findElement(By.css('.cardButtons__list'))
-        const textAreaElements = await driver.findElements(By.css('.cardButtons__list_item'));
-        await textAreaElements[1].click()
+        await driver.sleep(2000)
+        await driver.findElement(By.css('.cardButtons'))
+        const textAreaElements = await driver.findElements(By.css('.cardButtons_deleteButton'));
+        await textAreaElements[0].click()
+        await driver.sleep(1000);
+        await driver.findElement(By.css('.actionDialog__bottom'))
+        const textAreaElements1 = await driver.findElements(By.css('.GlobalButton.orange.regular '));
+        await textAreaElements1[1].click()
+        await driver.sleep(1000);
         await takeScreenshot(driver, './screenshots/deleteTemplate.png');
     } finally {
         await driver.quit();

@@ -21,14 +21,13 @@ async function editInterTemplate() {
         for (const buttonElement of buttonsElements) {
             await buttonElement.click();
         }
-        await driver.sleep(1000)
-        await driver.findElement(By.css('.cardButtons__list'))
-        const textAreaElements = await driver.findElements(By.css('.cardButtons__list_item'));
+        await driver.sleep(2000)
+        const textAreaElements = await driver.findElements(By.css('.cardButtons_editButton'));
         await textAreaElements[0].click()
         const textAreaElements1 = await driver.findElements(By.css('.textArea__textarea'));
         await textAreaElements1[0].sendKeys(" test");
         await driver.sleep(1000);
-        await driver.findElement(By.css('.interactiveMessageSettings__footer_saveButton.false')).click();
+        await driver.findElement(By.css('.GlobalButton.orange.regular ')).click();
         await driver.sleep(1000);
         await takeScreenshot(driver, './screenshots/editingInterTemplate.png');
     } finally {

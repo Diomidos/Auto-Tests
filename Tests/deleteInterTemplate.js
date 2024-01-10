@@ -20,10 +20,14 @@ async function deleteInterTemplate() {
         for (const buttonElement of buttonsElements) {
             await buttonElement.click();
         }
-        await driver.sleep(1000)
-        await driver.findElement(By.css('.cardButtons__list'))
-        const textAreaElements = await driver.findElements(By.css('.cardButtons__list_item'));
-        await textAreaElements[1].click()
+        await driver.sleep(2000)
+        await driver.findElement(By.css('.cardButtons'))
+        const textAreaElements = await driver.findElements(By.css('.cardButtons_deleteButton'));
+        await textAreaElements[0].click()
+        await driver.sleep(1000);
+        await driver.findElement(By.css('.actionDialog__bottom'))
+        const textAreaElements1 = await driver.findElements(By.css('.GlobalButton.orange.regular '));
+        await textAreaElements1[1].click()
         await driver.sleep(1000);
         await takeScreenshot(driver, './screenshots/deleteInterTemplate.png');
     } finally {

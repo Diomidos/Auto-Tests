@@ -1,4 +1,4 @@
-// Тест testInteractiveMessages  Вход. Страница "Интерактивные сообщения".
+// Тест testInteractiveMessages  Вход. Страница создания "Интерактивные сообщения".
 require('dotenv').config();
 const LOGIN = process.env.LOGIN
 const PASSWORD = process.env.PASSWORD
@@ -29,7 +29,7 @@ async function testInteractiveMessages() {
         await textAreaElements[5].sendKeys("Кнопка №2");
         await driver.sleep(1000);
         await takeScreenshot(driver, './screenshots/newInteractiveMessage004.png');
-        await driver.findElement(By.css('.interactiveMessageSettings__footer_saveButton.disabled')).click();
+        await driver.findElement(By.css('.GlobalButton.orange.regular ')).click();
         await driver.sleep(2000);
         await takeScreenshot(driver, './screenshots/newInteractiveMessage004.png');
     } finally {

@@ -1,13 +1,13 @@
-// Тест Вход. Страница "Подписки". Создание счёта для оплаты Банковской картой.
+// Тест Вход. Страница "Подписки". Создание счёта для оплаты Юр Лицом.
 require('dotenv').config();
 const LOGIN = process.env.LOGIN
 const PASSWORD = process.env.PASSWORD
-const { Builder, By, Key, until, Button } = require("selenium-webdriver");
+const { Builder, By, Key, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs");
 const path = require("path");
 
-async function creatingInvoice() {
+async function SubscriptionsPaymentLegalEntities() {
     let driver = await new Builder()
         .forBrowser("chrome")
         .setChromeOptions(new chrome.Options().addArguments("--start-maximized"))
@@ -27,19 +27,19 @@ async function creatingInvoice() {
         await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
         await driver.sleep(1000);
         await driver.findElement(By.css('.subscriptionsInvoicePay__bottom ')).click();
-        // await driver.findElement(By.css('.subscriptionsInvoicePay__bottom ')).click();
-        // await driver.sleep(1000);
-        await takeScreenshot(driver, './screenshots/invoice001.png');
         await driver.sleep(1000);
-
-        await driver.findElement(By.css('.GlobalButton.orange.regular ')).click();
-        // await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
-
-        // const Button = await driver.findElement(By.css('.GlobalButton.orange.regular '));
-        // await Button.click();
-        // await Button.click();
+        const element = await driver.findElement(By.css('input[name="payment_method"][value="BANK_TRANSFER"]'));
+        await element.click();
         await driver.sleep(1000);
-        await takeScreenshot(driver, './screenshots/invoice002.png');
+        await driver.findElement(By.css('.dropdownContainer__dropdown '));
+        await driver.findElement(By.css('.dropdownContainer__dropdown_arrowIcon.false')).click();
+        const textAreaElements = await driver.findElements(By.css('.dropdownContainer__dropdown_content__item'));
+        await textAreaElements[2].click();
+        await driver.sleep(2000);
+        const textAreaElements1 = await driver.findElements(By.css('.GlobalButton.orange.regular'));
+        await textAreaElements1[1].click()
+        await driver.sleep(3000);
+        await takeScreenshot(driver, './screenshots/paymentLegalEntities.png');
     } finally {
         await driver.quit();
     }
@@ -49,4 +49,4 @@ async function takeScreenshot(driver, filename) {
         fs.writeFileSync(filename, data, 'base64');
     });
 }
-creatingInvoice();
+SubscriptionsPaymentLegalEntities();

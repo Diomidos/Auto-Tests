@@ -6,12 +6,12 @@ require('dotenv').config();
 const LOGIN = process.env.LOGIN
 const PASSWORD = process.env.PASSWORD
 
-// Тест 1 testInteractiveMessages  Вход. Создание Интерактивного сообщения.
-async function testInteractiveMessages(driver) {
+// Тест 1 Страница "Подписки". Создание счёта на Оплату. Оплата банковской картой РФ.
+async function SubscriptionsPaymentCard(driver) {
   await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
   const handles = await driver.getAllWindowHandles();
   await driver.switchTo().window(handles[handles.length - 1]);
-  // Логика теста testInteractiveMessages
+  // Логика теста SubscriptionsPaymentCard
   await driver.get(
     "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
   );
@@ -19,55 +19,19 @@ async function testInteractiveMessages(driver) {
   await driver.findElement(By.css("#password")).sendKeys(`${PASSWORD}`, Key.ENTER);
   await driver.wait(until.elementLocated(By.css('#chats')));
   await driver.sleep(1000);
-  await driver.findElement(By.css('#templates')).click();
-  const buttonsElements = await driver.findElements(By.css('.templatesList__item_content'));
-  for (const buttonElement of buttonsElements) {
-    await buttonElement.click();
-  }
-  await driver.findElement(By.css('.GlobalButton.orange.regular.isImage')).click();
-  const textAreaElements = await driver.findElements(By.css('.textArea__textarea'));
-  await textAreaElements[0].sendKeys("Название Нового Интерактивного шаблона Радист Онлайн");
-  await textAreaElements[1].sendKeys("Текст Заголовка: Рандомнй текст");
-  await textAreaElements[2].sendKeys("Текст Шаблона: Повседневная практика показывает, что социально-экономическое развитие способствует повышению актуальности позиций, занимаемых участниками в отношении поставленных задач. Соображения высшего порядка, а также выбранный нами инновационный путь обеспечивает актуальность позиций, занимаемых участниками в отношении поставленных задач? Задача организации, в особенности же новая модель организационной деятельности позволяет выполнить важнейшие задания по разработке направлений...");
-  await textAreaElements[3].sendKeys("Нижний колонтикул. Здесь должен быть какой-либо текст. Пусть будет этот.");
-  await textAreaElements[4].sendKeys("Кнопка 42");
-  await textAreaElements[5].sendKeys("Кнопка 44");
+  await driver.findElement(By.css("#settings")).click();
   await driver.sleep(1000);
-  await driver.findElement(By.css('.GlobalButton.orange.regular ')).click();
-  await driver.sleep(1000);
-  await takeScreenshot(driver, './screenshots/BlockTemplates_Test_1.png');
-  async function takeScreenshot(driver, filename) {
-    await driver.takeScreenshot().then(function (data) {
-      fs.writeFileSync(filename, data, 'base64');
-    });
-  }
-  // Закрыть текущую вкладку
-  await driver.close();
-  await driver.switchTo().window(handles[handles.length - 2]);
-}
-
-// Тест 2 templates Вход. Страница "Шаблоны". Создание Нового текстового шаблона.
-async function testTemplate(driver) {
-  await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
-  const handles = await driver.getAllWindowHandles();
-  await driver.switchTo().window(handles[handles.length - 1]);
-  // Логика теста templates
-  await driver.get(
-    "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
-  );
-  await driver.wait(until.elementLocated(By.css('#chats')));
-  await driver.findElement(By.css('#templates')).click();
+  await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
   await driver.sleep(2000);
-  await driver.actions().doubleClick(await driver.findElement(By.css('.GlobalButton.orange.regular.isImage'))).perform();
-  await driver.sleep(1000);
-  // await takeScreenshot(driver, './screenshots/001.png');
-  const textAreaElements = await driver.findElements(By.css('.textArea__textarea'));
-  await textAreaElements[0].sendKeys("Название Нового шаблона Радист Онлайн");
-  await textAreaElements[1].sendKeys("Текст для нового шаблона из автотеста");
-  await driver.sleep(1000);
   await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
   await driver.sleep(1000);
-  await takeScreenshot(driver, './screenshots/BlockTemplates_Test_2.png');
+  await driver.findElement(By.css('.subscriptionsInvoicePay__bottom ')).click();
+  await driver.sleep(1000);
+  const textAreaElements = await driver.findElements(By.css('.GlobalButton.orange.regular'));
+  await textAreaElements[1].click()
+  await driver.sleep(2000);
+  await takeScreenshot(driver, './screenshots/invoice.png');
+
   async function takeScreenshot(driver, filename) {
     await driver.takeScreenshot().then(function (data) {
       fs.writeFileSync(filename, data, 'base64');
@@ -78,30 +42,128 @@ async function testTemplate(driver) {
   await driver.switchTo().window(handles[handles.length - 2]);
 }
 
-// Тест 3 editInterTemplate Вход. Страница "Шаблоны". Редактирование интерактивного шаблона.
-async function editInterTemplate(driver) {
+// Тест 2 Вход. Страница "Подписки". Создание счёта для оплаты Банковской картой Не РФ.
+async function SubscriptionsPaymentCardNoRF(driver) {
   await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
   const handles = await driver.getAllWindowHandles();
   await driver.switchTo().window(handles[handles.length - 1]);
-  // Логика теста editInterTemplate
+  // Логика теста SubscriptionsPaymentCardNoRF
   await driver.get(
     "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
   );
   await driver.wait(until.elementLocated(By.css('#chats')));
-  await driver.findElement(By.css('#templates')).click();
-  const buttonsElements = await driver.findElements(By.css('.templatesList__item_content'));
-  for (const buttonElement of buttonsElements) {
-    await buttonElement.click();
-  }
-  await driver.sleep(2000)
-  const textAreaElements = await driver.findElements(By.css('.cardButtons_editButton'));
-  await textAreaElements[0].click()
-  const textAreaElements1 = await driver.findElements(By.css('.textArea__textarea'));
-  await textAreaElements1[0].sendKeys(" test");
   await driver.sleep(1000);
+  await driver.findElement(By.css("#settings")).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
+  await driver.sleep(2000);
+  await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css('.subscriptionsInvoicePay__bottom ')).click();
+  await driver.sleep(1000);
+  const element = await driver.findElement(By.css('input[name="payment_method"][value="CARD_OTHER"]'));
+  await element.click();
+  await driver.sleep(1000);
+  const textAreaElements = await driver.findElements(By.css('.GlobalButton.orange.regular'));
+  await textAreaElements[1].click()
+  await driver.sleep(2000);
+  await takeScreenshot(driver, './screenshots/InvoiceCardNoRF.png');
+
+  async function takeScreenshot(driver, filename) {
+    await driver.takeScreenshot().then(function (data) {
+      fs.writeFileSync(filename, data, 'base64');
+    });
+  }
+  // Закрыть текущую вкладку
+  await driver.close();
+  await driver.switchTo().window(handles[handles.length - 2]);
+}
+
+// Тест 3 Вход. Страница "Подписки". Создание счёта для оплаты Юр Лицом.
+async function SubscriptionsPaymentLegalEntities(driver) {
+  await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
+  const handles = await driver.getAllWindowHandles();
+  await driver.switchTo().window(handles[handles.length - 1]);
+  // Логика теста SubscriptionsPaymentLegalEntities
+  await driver.get(
+    "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
+  );
+  await driver.wait(until.elementLocated(By.css('#chats')));
+  await driver.sleep(1000);
+  await driver.findElement(By.css("#settings")).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
+  await driver.sleep(2000);
+  await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css('.subscriptionsInvoicePay__bottom ')).click();
+  await driver.sleep(1000);
+  const element = await driver.findElement(By.css('input[name="payment_method"][value="BANK_TRANSFER"]'));
+  await element.click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css('.dropdownContainer__dropdown '));
+  await driver.findElement(By.css('.dropdownContainer__dropdown_arrowIcon.false')).click();
+  const textAreaElements = await driver.findElements(By.css('.dropdownContainer__dropdown_content__item'));
+  await textAreaElements[2].click();
+  await driver.sleep(2000);
+  const textAreaElements1 = await driver.findElements(By.css('.GlobalButton.orange.regular'));
+  await textAreaElements1[1].click()
+  await driver.sleep(3000);
+  await takeScreenshot(driver, './screenshots/paymentLegalEntities.png');
+
+  async function takeScreenshot(driver, filename) {
+    await driver.takeScreenshot().then(function (data) {
+      fs.writeFileSync(filename, data, 'base64');
+    });
+  }
+  // Закрыть текущую вкладку
+  await driver.close();
+  await driver.switchTo().window(handles[handles.length - 2]);
+}
+
+// Тест 4 Вход. Страница "Подписки". Создание "Реквизитов".
+async function SubscriptionsCreationOfDetails(driver) {
+  await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
+  const handles = await driver.getAllWindowHandles();
+  await driver.switchTo().window(handles[handles.length - 1]);
+  // Логика теста SubscriptionsCreationOfDetails
+  await driver.get(
+    "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
+  );
+  await driver.wait(until.elementLocated(By.css('#chats')));
+  await driver.sleep(1000);
+  await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css('#requisites')).click();
   await driver.findElement(By.css('.GlobalButton.orange.regular ')).click();
+  const textAreaElements = await driver.findElements(By.css('.inputContainer__input  '));
+  function generateRandomName() {
+    const names = ['Johnson', 'Rondo', 'Coca', 'Stark', 'Wilson', 'D', 'Tony', 'Olives'];
+    const surnames = ['and Ko', 'and Ko', 'and Ko', 'and Ko', 'and Ko', 'and Ko', 'and Ko', 'and Ko'];
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    const randomSurname = surnames[Math.floor(Math.random() * surnames.length)];
+    return `${randomName} ${randomSurname}`;
+  }
+  await textAreaElements[0].sendKeys(generateRandomName());
+  const textAreaElements1 = await driver.findElements(By.css('.inputContainer__input '));
+  function generateRandomNumber(length) {
+    let result = '';
+    const characters = '0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+  await textAreaElements1[1].sendKeys(generateRandomNumber(12));
+  await driver.findElement(By.css('.GlobalButton.orange.small ')).click();
   await driver.sleep(1000);
-  await takeScreenshot(driver, './screenshots/BlockTemplates_Test_3.png');
+  await takeScreenshot(driver, './screenshots/creationOfDetails_1.png');
+  await driver.sleep(1000);
+  await driver.findElement(By.css('.GlobalButton.orange.small ')).click();
+  await driver.sleep(1000);
+  await takeScreenshot(driver, './screenshots/creationOfDetails_2.png');
+
   async function takeScreenshot(driver, filename) {
     await driver.takeScreenshot().then(function (data) {
       fs.writeFileSync(filename, data, 'base64');
@@ -112,61 +174,17 @@ async function editInterTemplate(driver) {
   await driver.switchTo().window(handles[handles.length - 2]);
 }
 
-// Тест 4 editTemplate Вход. Страница "Шаблоны". Редактирование обычного текстового шаблона.
-async function editTemplate(driver) {
-  await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
-  const handles = await driver.getAllWindowHandles();
-  await driver.switchTo().window(handles[handles.length - 1]);
-  // Логика теста editTemplate
-  await driver.get(
-    "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
-  );
-  await driver.wait(until.elementLocated(By.css('#chats')));
-  await driver.findElement(By.css('#templates')).click();
-  await driver.sleep(2000)
-  const textAreaElements = await driver.findElements(By.css('.cardButtons_editButton'));
-  await textAreaElements[0].click()
-  const textAreaElements1 = await driver.findElements(By.css('.textArea__textarea'));
-  await textAreaElements1[0].sendKeys(" тест 44546");
-  await driver.sleep(1000);
-  await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
-  await driver.sleep(1000);
-  await takeScreenshot(driver, './screenshots/BlockTemplates_Test_4.png');
-  async function takeScreenshot(driver, filename) {
-    await driver.takeScreenshot().then(function (data) {
-      fs.writeFileSync(filename, data, 'base64');
-    });
-  }
-  // Закрыть текущую вкладку
-  await driver.close();
-  await driver.switchTo().window(handles[handles.length - 2]);
-}
-
-// Тест 5 deleteInterTemplate Вход. Страница "Шаблоны". Удаление интерактивного шаблона.
+// Тест 5 
 async function deleteInterTemplate(driver) {
   await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
   const handles = await driver.getAllWindowHandles();
   await driver.switchTo().window(handles[handles.length - 1]);
-  // Логика теста deleteInterTemplate
+  // Логика теста 
   await driver.get(
     "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
   );
   await driver.wait(until.elementLocated(By.css('#chats')));
-  await driver.findElement(By.css('#templates')).click();
-  const buttonsElements = await driver.findElements(By.css('.templatesList__item_content'));
-  for (const buttonElement of buttonsElements) {
-    await buttonElement.click();
-  }
-  await driver.sleep(1000)
-  await driver.findElement(By.css('.cardButtons'))
-  const textAreaElements = await driver.findElements(By.css('.cardButtons_deleteButton'));
-  await textAreaElements[0].click()
-  await driver.sleep(1000);
-  await driver.findElement(By.css('.actionDialog__bottom'))
-  const textAreaElements1 = await driver.findElements(By.css('.GlobalButton.orange.regular '));
-  await textAreaElements1[1].click()
-  await driver.sleep(1000);
-  await takeScreenshot(driver, './screenshots/BlockTemplates_Test_5.png');
+
   async function takeScreenshot(driver, filename) {
     await driver.takeScreenshot().then(function (data) {
       fs.writeFileSync(filename, data, 'base64');
@@ -177,27 +195,18 @@ async function deleteInterTemplate(driver) {
   await driver.switchTo().window(handles[handles.length - 2]);
 }
 
-// Тест 6 deleteTemplate Вход. Страница "Шаблоны". Удаление обычного текстового шаблона.
+// Тест 6 
 require('dotenv').config();
 async function deleteTemplate(driver) {
   await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
   const handles = await driver.getAllWindowHandles();
   await driver.switchTo().window(handles[handles.length - 1]);
-  // Логика теста deleteTemplate
+  // Логика теста 
   await driver.get(
     "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
   );
   await driver.wait(until.elementLocated(By.css('#chats')));
-  await driver.findElement(By.css('#templates')).click();
-  await driver.sleep(1000)
-  await driver.findElement(By.css('.cardButtons'))
-  const textAreaElements = await driver.findElements(By.css('.cardButtons_deleteButton'));
-  await textAreaElements[0].click()
-  await driver.sleep(1000);
-  await driver.findElement(By.css('.actionDialog__bottom'))
-  const textAreaElements1 = await driver.findElements(By.css('.GlobalButton.orange.regular '));
-  await textAreaElements1[1].click()
-  await takeScreenshot(driver, './screenshots/BlockTemplates_Test_6.png');
+
   async function takeScreenshot(driver, filename) {
     await driver.takeScreenshot().then(function (data) {
       fs.writeFileSync(filename, data, 'base64');
@@ -217,12 +226,12 @@ async function main() {
     .setChromeOptions(options)
     .build();
 
-  await testInteractiveMessages(driver);
-  await testTemplate(driver);
-  await editInterTemplate(driver);
-  await editTemplate(driver);
-  await deleteInterTemplate(driver);
-  await deleteTemplate(driver);
+  await SubscriptionsPaymentCard(driver);
+  await SubscriptionsPaymentCardNoRF(driver);
+  await SubscriptionsPaymentLegalEntities(driver);
+  await SubscriptionsCreationOfDetails(driver);
+  //   await deleteInterTemplate(driver);
+  //   await deleteTemplate(driver);
 
   await driver.quit(); // Закрытие браузера после выполнения тестов
 }

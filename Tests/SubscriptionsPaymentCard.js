@@ -1,12 +1,13 @@
-// Тест Вход. Страница "Подписки". Открытие счёта на Оплату, в блоке "Счета".
+// Тест Вход. Страница "Подписки". Создание счёта для оплаты Банковской картой.
 require('dotenv').config();
 const LOGIN = process.env.LOGIN
 const PASSWORD = process.env.PASSWORD
-const { Builder, By, Key, until } = require("selenium-webdriver");
+const { Builder, By, Key, until, Button } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs");
 const path = require("path");
-async function run() {
+
+async function SubscriptionsPaymentCard() {
     let driver = await new Builder()
         .forBrowser("chrome")
         .setChromeOptions(new chrome.Options().addArguments("--start-maximized"))
@@ -18,24 +19,19 @@ async function run() {
         await driver.findElement(By.css("#username")).sendKeys(`${LOGIN}`);
         await driver.findElement(By.css("#password")).sendKeys(`${PASSWORD}`, Key.ENTER);
         await driver.wait(until.elementLocated(By.css('#chats')));
+        await driver.sleep(1000);
         await driver.findElement(By.css("#settings")).click();
+        await driver.sleep(1000);
         await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
+        await driver.sleep(2000);
+        await driver.findElement(By.css('.GlobalButton.orange.regular')).click();
         await driver.sleep(1000);
-        await driver.findElement(By.css('.bills__list')).click();
-        await driver.findElement(By.css('.GlobalButton.white.regular')).click();
-        const handles = await driver.getAllWindowHandles();
-        await driver.switchTo().window(handles[1]);
-        // Установка значения "visible" для свойств overflow элементов body и documentElement
-        await driver.executeScript('document.body.style.overflow = "visible";');
-        await driver.executeScript('document.documentElement.style.overflow = "visible";');
-        // Получение размеров страницы
-        const pageWidth = await driver.executeScript('return document.body.offsetWidth');
-        const pageHeight = await driver.executeScript('return document.body.scrollHeight');
-        // Установка размеров окна браузера
-        await driver.manage().window().setRect({ width: 1440, height: 1150 });
-        await driver.findElement(By.css('.radist-invoice_container')).click();
+        await driver.findElement(By.css('.subscriptionsInvoicePay__bottom ')).click();
         await driver.sleep(1000);
-        await takeScreenshot(driver, './screenshots/invoice008.png');
+        const textAreaElements = await driver.findElements(By.css('.GlobalButton.orange.regular'));
+        await textAreaElements[1].click()
+        await driver.sleep(2000);
+        await takeScreenshot(driver, './screenshots/PaymentCard.png');
     } finally {
         await driver.quit();
     }
@@ -45,4 +41,4 @@ async function takeScreenshot(driver, filename) {
         fs.writeFileSync(filename, data, 'base64');
     });
 }
-run();
+SubscriptionsPaymentCard();
