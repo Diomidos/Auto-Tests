@@ -25,13 +25,14 @@ async function SubscriptionsEditingDetails() {
 
         // await textAreaElements[0].click();
         // const elementDelete = await driver.findElement(By.css(''));
-        // await driver.findElement(By.css('.requisites__list_item'));
+        const textAreaElements = await driver.findElement(By.css('.requisites__list_item'));
+        await textAreaElements[0];
         // const textAreaElements = await driver.findElement(By.css('.approved'));
         // await textAreaElements[0].click();
         const textAreaElements1 = await driver.findElement(By.css('.GlobalButton.white.regular '));
         await textAreaElements1[0].click();
 
-        await driver.sleep(1000);
+        await driver.sleep(3000);
         await takeScreenshot(driver, './screenshots/creationOfDetails_2.png');
         // await driver.sleep(1000);
         // await driver.findElement(By.css('.GlobalButton.orange.small ')).click();
