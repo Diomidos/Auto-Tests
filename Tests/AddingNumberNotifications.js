@@ -1,4 +1,4 @@
-// // Тест enableDisableNotifications  Вход. Страница "Уведомления" Включение/Отключение уведомлений.
+// AddingNumberNotifications Вход. Страница "Уведомления". Добавление номера уведомления.
 require('dotenv').config();
 const LOGIN = process.env.LOGIN
 const PASSWORD = process.env.PASSWORD
@@ -6,7 +6,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs");
 const path = require("path");
-async function ChangeCurrencies() {
+async function AddingNumberNotifications() {
     let driver = await new Builder().forBrowser("chrome").setChromeOptions(new chrome.Options().addArguments("--start-maximized")).build()
     try {
         await driver.get(
@@ -17,31 +17,28 @@ async function ChangeCurrencies() {
         await driver.sleep(1000);
         await driver.findElement(By.css("#settings")).click();
         await driver.sleep(1000);
-        // await driver.findElement(By.css("a[href='/companies/1/settings/company_settings']")).click();
+        await driver.findElement(By.css("a[href='/companies/1/settings/notifications']")).click();
         // await driver.sleep(1000);
-        // await driver.findElement(By.css(".dropdownContainer__dropdown_placeholder.selected")).click();
-        // await driver.findElement(By.css(".dropdownContainer__dropdown "));
-        // await driver.sleep(1000);
-
-        // let dropdownContainer = await driver.findElement(By.css(".dropdownContainer__dropdown_content"));
-        // let dropdownItems = await dropdownContainer.findElements(By.css(".dropdownContainer__dropdown_content__item"));
-        // let selectedElementIndex = -1;
-        // if (fs.existsSync('selectedElement.txt')) {
-        //     selectedElementIndex = parseInt(fs.readFileSync('selectedElement.txt', 'utf8'));
-        // }
-        // let targetIndex;
-        // if (selectedElementIndex === 1) {
-        //     targetIndex = 0;
-        // } else {
-        //     targetIndex = 1;
-        // }
-        // await dropdownItems[targetIndex].click();
-        // fs.writeFileSync('selectedElement.txt', targetIndex.toString());
-
-        // await driver.sleep(1000);
-        // await driver.findElement(By.css(".GlobalButton.orange.regular ")).click();
+        await driver.findElement(By.css(".customPhone"));
         await driver.sleep(1000);
-        await takeScreenshot(driver, './screenshots/changeCurrencies.png');
+        await driver.findElement(By.css(".react-tel-input"));
+        await driver.sleep(1000);
+        await driver.findElement(By.css(".GlobalButton.white.small.isImage")).click();
+        await driver.sleep(1000);
+        // await driver.findElement(By.css(".")).click();
+        await driver.findElement(By.css(".form-control.customPhone__item__phone")).sendKeys("1234567890", Key.ENTER);
+        // await textAreaElements(1).sendKeys("1234567890", Key.ENTER);
+        // await driver.sleep(1000);
+        // const textAreaElements1 = await driver.findElement(By.css(".react-tel-input "));
+        // await textAreaElements1(1).sendKeys("1234567890", Key.ENTER);
+
+        await driver.sleep(1000);
+        await driver.findElement(By.css(".GlobalButton.orange.regular ")).click();
+
+
+
+        await driver.sleep(1000);
+        await takeScreenshot(driver, './screenshots/AddingNumberNotifications.png');
     } finally {
         await driver.quit();
     }
@@ -51,4 +48,4 @@ async function takeScreenshot(driver, filename) {
         fs.writeFileSync(filename, data, 'base64');
     });
 }
-ChangeCurrencies();
+AddingNumberNotifications();
