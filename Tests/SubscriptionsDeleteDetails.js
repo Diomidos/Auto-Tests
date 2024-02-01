@@ -1,9 +1,9 @@
-// Тест Вход. Страница "Подписки". Редактирование "Реквизитов".
+// Тест Вход. Страница "Подписки". Удаление "Реквизитов".
 const { Builder, By, Key, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs");
 const path = require("path");
-async function SubscriptionsEditingDetails() {
+async function SubscriptionsDeleteDetails() {
     let driver = await new Builder()
         .forBrowser("chrome")
         .setChromeOptions(new chrome.Options().addArguments("--start-maximized"))
@@ -20,22 +20,16 @@ async function SubscriptionsEditingDetails() {
         await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
         await driver.sleep(1000);
         await driver.findElement(By.css('#requisites')).click();
-        await driver.sleep(2000);
-        await driver.findElement(By.css('.requisites__list'));
-
-        // await textAreaElements[0].click();
-        // const elementDelete = await driver.findElement(By.css(''));
-        const textAreaElements = await driver.findElement(By.css('.requisites__list_item'));
-        await textAreaElements[0];
-        // const textAreaElements = await driver.findElement(By.css('.approved'));
-        // await textAreaElements[0].click();
-        const textAreaElements1 = await driver.findElement(By.css('.GlobalButton.white.regular '));
-        await textAreaElements1[0].click();
-
-        await driver.sleep(3000);
-        await takeScreenshot(driver, './screenshots/creationOfDetails_2.png');
-        // await driver.sleep(1000);
-        // await driver.findElement(By.css('.GlobalButton.orange.small ')).click();
+        await driver.sleep(1000);
+        await driver.findElement(By.css('.requisites__list_buttons'));
+        await driver.sleep(1000);
+        const buttons = await driver.findElements(By.css("button.GlobalButton.white.regular"));
+        await buttons[1].click();
+        await driver.sleep(1000);
+        const textAreaElements = await driver.findElements(By.css('.GlobalButton.orange.regular '));
+        await textAreaElements[1].click();
+        await driver.sleep(1000);
+        await takeScreenshot(driver, './screenshots/deleteDetails.png');
     } finally {
         await driver.quit();
     }
@@ -45,4 +39,4 @@ async function takeScreenshot(driver, filename) {
         fs.writeFileSync(filename, data, 'base64');
     });
 }
-SubscriptionsEditingDetails();
+SubscriptionsDeleteDetails();

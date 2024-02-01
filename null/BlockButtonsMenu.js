@@ -92,8 +92,11 @@ async function testHelpSections(driver) {
         "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
     );
     await driver.wait(until.elementLocated(By.css('#chats')));
-    await driver.findElement(By.css(".ReferenceButton")).click();
-    await driver.findElement(By.css(".helpTooltip__meeting")).click();
+    await driver.sleep(1000);
+    await driver.findElement(By.css(".supportMenu"));
+    await driver.sleep(1000);
+    await driver.findElement(By.css(".referenceButton")).click();
+    await driver.findElement(By.css(".helpTooltipPopup__meeting")).click();
     await driver.sleep(1000);
     await takeScreenshot(driver, "./screenshots/helpSections_1.png");
     await driver.findElement(By.css(".firstStep__buttonsGroup_beginButton")).click();
@@ -139,14 +142,24 @@ async function testCompanyCreation(driver) {
     );
     await driver.wait(until.elementLocated(By.css('#chats')));
     await driver.findElement(By.css(".companyDropdown__icon")).click();
-        await driver.findElement(By.css(".createCompanyButton")).click();
-        await driver.sleep(1000);
-        await driver.findElement(By.css(".inputContainer__input")).sendKeys("Auto Test Company");
-        await driver.findElement(By.css(".form-control")).sendKeys("9000000000")
-        await driver.sleep(1000);
-        await driver.findElement(By.css(".GlobalButton.orange.regular ")).click();
-        await driver.sleep(1000);
-        await takeScreenshot(driver, "./screenshots/companyCreation.png");
+    await driver.findElement(By.css(".createCompany")).click();
+    await driver.sleep(1000);
+    function generateRandomName() {
+        const names = ["Aliance", "Bobik and Kotik", "Charlie Chaplin and Alex", "David and Goliaf", "Maugli and Sherchan"];
+        return names[Math.floor(Math.random() * names.length)];
+    }
+    function generateRandomPhoneNumber() {
+        const phoneNumber = Math.floor(Math.random() * 9000000000) + 1000000000;
+        return phoneNumber.toString();
+    }
+    const randomName = generateRandomName();
+    const randomPhoneNumber = generateRandomPhoneNumber();
+    await driver.findElement(By.css(".inputContainer__input")).sendKeys(randomName);
+    await driver.findElement(By.css(".PhoneInputInput")).sendKeys(randomPhoneNumber);
+    await driver.sleep(1000);
+    await driver.findElement(By.css(".GlobalButton.orange.regular ")).click();
+    await driver.sleep(1000);
+    await takeScreenshot(driver, "./screenshots/companyCreation.png");
 
     async function takeScreenshot(driver, filename) {
         await driver.takeScreenshot().then(function (data) {

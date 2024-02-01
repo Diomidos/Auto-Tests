@@ -132,6 +132,8 @@ async function SubscriptionsCreationOfDetails(driver) {
   );
   await driver.wait(until.elementLocated(By.css('#chats')));
   await driver.sleep(1000);
+  await driver.findElement(By.css("#settings")).click();
+  await driver.sleep(1000);
   await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
   await driver.sleep(1000);
   await driver.findElement(By.css('#requisites')).click();
@@ -174,16 +176,31 @@ async function SubscriptionsCreationOfDetails(driver) {
   await driver.switchTo().window(handles[handles.length - 2]);
 }
 
-// Тест 5 
-async function deleteInterTemplate(driver) {
+// Тест 5 Вход. Страница "Подписки". Редактирование "Реквизитов".
+async function SubscriptionsEditingDetails(driver) {
   await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
   const handles = await driver.getAllWindowHandles();
   await driver.switchTo().window(handles[handles.length - 1]);
-  // Логика теста 
+  // Логика теста SubscriptionsEditingDetails
   await driver.get(
     "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
   );
   await driver.wait(until.elementLocated(By.css('#chats')));
+  await driver.findElement(By.css("#settings")).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css('#requisites')).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css('.requisites__list_buttons'));
+  await driver.findElement(By.css('.GlobalButton.white.regular ')).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css('.inputContainer__wrapper'));
+  await driver.findElement(By.css('.inputContainer__input ')).sendKeys(' AutoTest', Key.ENTER);
+  await driver.sleep(1000);
+  await driver.findElement(By.css('.GlobalButton.orange.small ')).click();
+  await driver.sleep(1000);
+  await takeScreenshot(driver, './screenshots/editingDetails.png');
 
   async function takeScreenshot(driver, filename) {
     await driver.takeScreenshot().then(function (data) {
@@ -195,18 +212,32 @@ async function deleteInterTemplate(driver) {
   await driver.switchTo().window(handles[handles.length - 2]);
 }
 
-// Тест 6 
+// Тест 6 Вход. Страница "Подписки". Удаление "Реквизитов".
 require('dotenv').config();
-async function deleteTemplate(driver) {
+async function SubscriptionsDeleteDetails(driver) {
   await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
   const handles = await driver.getAllWindowHandles();
   await driver.switchTo().window(handles[handles.length - 1]);
-  // Логика теста 
+  // Логика теста SubscriptionsDeleteDetails
   await driver.get(
     "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
   );
   await driver.wait(until.elementLocated(By.css('#chats')));
-
+  await driver.findElement(By.css("#settings")).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css("a[href='/companies/1/settings/subscriptions']")).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css('#requisites')).click();
+  await driver.sleep(1000);
+  await driver.findElement(By.css('.requisites__list_buttons'));
+  await driver.sleep(1000);
+  const buttons = await driver.findElements(By.css("button.GlobalButton.white.regular"));
+  await buttons[1].click();
+  await driver.sleep(1000);
+  const textAreaElements = await driver.findElements(By.css('.GlobalButton.orange.regular '));
+  await textAreaElements[1].click();
+  await driver.sleep(1000);
+  await takeScreenshot(driver, './screenshots/deleteDetails.png');
   async function takeScreenshot(driver, filename) {
     await driver.takeScreenshot().then(function (data) {
       fs.writeFileSync(filename, data, 'base64');
@@ -230,8 +261,8 @@ async function main() {
   await SubscriptionsPaymentCardNoRF(driver);
   await SubscriptionsPaymentLegalEntities(driver);
   await SubscriptionsCreationOfDetails(driver);
-  //   await deleteInterTemplate(driver);
-  //   await deleteTemplate(driver);
+  await SubscriptionsEditingDetails(driver);
+  await SubscriptionsDeleteDetails(driver);
 
   await driver.quit(); // Закрытие браузера после выполнения тестов
 }

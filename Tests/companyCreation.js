@@ -20,10 +20,20 @@ async function testCompanyCreation() {
         await driver.findElement(By.css("#password")).sendKeys(`${PASSWORD}`, Key.ENTER);
         await driver.wait(until.elementLocated(By.css("#chats")));
         await driver.findElement(By.css(".companyDropdown__icon")).click();
-        await driver.findElement(By.css(".createCompanyButton")).click();
+        await driver.findElement(By.css(".createCompany")).click();
         await driver.sleep(1000);
-        await driver.findElement(By.css(".inputContainer__input")).sendKeys("Auto Test Company");
-        await driver.findElement(By.css(".form-control")).sendKeys("9000000000")
+        function generateRandomName() {
+            const names = ["Aliance", "Bobik and Kotik", "Charlie Chaplin and Alex", "David and Goliaf", "Maugli and Sherchan"];
+            return names[Math.floor(Math.random() * names.length)];
+        }
+        function generateRandomPhoneNumber() {
+            const phoneNumber = Math.floor(Math.random() * 9000000000) + 1000000000;
+            return phoneNumber.toString();
+        }
+        const randomName = generateRandomName();
+        const randomPhoneNumber = generateRandomPhoneNumber();
+        await driver.findElement(By.css(".inputContainer__input")).sendKeys(randomName);
+        await driver.findElement(By.css(".PhoneInputInput")).sendKeys(randomPhoneNumber);
         await driver.sleep(1000);
         await driver.findElement(By.css(".GlobalButton.orange.regular ")).click();
         await driver.sleep(1000);

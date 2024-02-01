@@ -18,22 +18,29 @@ async function AddingNumberNotifications() {
         await driver.findElement(By.css("#settings")).click();
         await driver.sleep(1000);
         await driver.findElement(By.css("a[href='/companies/1/settings/notifications']")).click();
-        // await driver.sleep(1000);
-        await driver.findElement(By.css(".customPhone"));
-        await driver.sleep(1000);
-        await driver.findElement(By.css(".react-tel-input"));
         await driver.sleep(1000);
         await driver.findElement(By.css(".GlobalButton.white.small.isImage")).click();
         await driver.sleep(1000);
+        const textAreaElements1 = await driver.findElement(By.css(".NotificationCard"));
+        await textAreaElements1[5].sendKeys("1234567890", Key.ENTER);
+        // const textAreaElements2 = await driver.findElement(By.css(".PhoneInput"));
+        // await textAreaElements2[1].click();
+
+
+        // await driver.findElement(By.css(".PhoneInput"));
+        await driver.sleep(1000);
+
+        // await driver.sleep(1000);
         // await driver.findElement(By.css(".")).click();
-        await driver.findElement(By.css(".form-control.customPhone__item__phone")).sendKeys("1234567890", Key.ENTER);
+        // const textAreaElements = await driver.findElement(By.css(".PhoneInputInput"));
+        // await textAreaElements[1].sendKeys("1234567890", Key.ENTER);
         // await textAreaElements(1).sendKeys("1234567890", Key.ENTER);
         // await driver.sleep(1000);
         // const textAreaElements1 = await driver.findElement(By.css(".react-tel-input "));
         // await textAreaElements1(1).sendKeys("1234567890", Key.ENTER);
 
-        await driver.sleep(1000);
-        await driver.findElement(By.css(".GlobalButton.orange.regular ")).click();
+        // await driver.sleep(1000);
+        // await driver.findElement(By.css(".GlobalButton.orange.regular ")).click();
 
 
 

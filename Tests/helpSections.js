@@ -22,9 +22,11 @@ async function testHelpSections() {
     await driver.findElement(By.css("#username")).sendKeys(`${LOGIN}`);
     await driver.findElement(By.css("#password")).sendKeys(`${PASSWORD}`, Key.ENTER);
     await driver.wait(until.elementLocated(By.css("#chats")));
-    // await driver.sleep(1000);
-    await driver.findElement(By.css(".ReferenceButton")).click();
-    await driver.findElement(By.css(".helpTooltip__meeting")).click();
+    await driver.sleep(1000);
+    await driver.findElement(By.css(".supportMenu"));
+    await driver.sleep(1000);
+    await driver.findElement(By.css(".referenceButton")).click();
+    await driver.findElement(By.css(".helpTooltipPopup__meeting")).click();
     await driver.sleep(1000);
     await takeScreenshot(driver, "./screenshots/helpSections_1.png");
     await driver.findElement(By.css(".firstStep__buttonsGroup_beginButton")).click();
@@ -49,7 +51,6 @@ async function testHelpSections() {
     await driver.sleep(1000);
     await takeScreenshot(driver, "./screenshots/helpSections_8.png");
   } finally {
-    // Закрываем браузер после выполнения
     await driver.quit();
   }
 }

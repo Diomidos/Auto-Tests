@@ -1,9 +1,9 @@
-// Тест Вход. Страница "Подписки". Удаление "Реквизитов".
+// Тест Вход. Страница "Подписки". Редактирование "Реквизитов".
 const { Builder, By, Key, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs");
 const path = require("path");
-async function SubscriptionsDeleteDetails() {
+async function SubscriptionsEditingDetails() {
     let driver = await new Builder()
         .forBrowser("chrome")
         .setChromeOptions(new chrome.Options().addArguments("--start-maximized"))
@@ -22,12 +22,14 @@ async function SubscriptionsDeleteDetails() {
         await driver.findElement(By.css('#requisites')).click();
         await driver.sleep(1000);
         await driver.findElement(By.css('.requisites__list_buttons'));
+        await driver.findElement(By.css('.GlobalButton.white.regular ')).click();
         await driver.sleep(1000);
-        const textAreaElements = await driver.findElement(By.css('.GlobalButton.white.regular '));
-        await textAreaElements[1].click();
-
+        await driver.findElement(By.css('.inputContainer__wrapper'));
+        await driver.findElement(By.css('.inputContainer__input ')).sendKeys(' AutoTest', Key.ENTER);
         await driver.sleep(1000);
-        await takeScreenshot(driver, './screenshots/deleteDetails.png');
+        await driver.findElement(By.css('.GlobalButton.orange.small ')).click();
+        await driver.sleep(1000);
+        await takeScreenshot(driver, './screenshots/editingDetails.png');
     } finally {
         await driver.quit();
     }
@@ -37,4 +39,4 @@ async function takeScreenshot(driver, filename) {
         fs.writeFileSync(filename, data, 'base64');
     });
 }
-SubscriptionsDeleteDetails();
+SubscriptionsEditingDetails();
