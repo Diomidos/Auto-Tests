@@ -18,11 +18,10 @@ async function DeleteNumberNotifications() {
         await driver.findElement(By.css("#settings")).click();
         await driver.sleep(1000);
         await driver.findElement(By.css("a[href='/companies/1/settings/notifications']")).click();
-        await driver.findElement(By.css(".Notifications__button")).click();
         await driver.sleep(1000);
-        await driver.findElement(By.css(".NotificationPhone__icon")).click();
+        await driver.findElement(By.css(".GlobalButton.white.small ")).click();
         await driver.sleep(1000);
-        await driver.findElement(By.css(".GlobalButton.orange.regular ")).click();
+        await driver.findElement(By.css(".actionDialog__bottom button.GlobalButton.orange.regular")).click();
         await driver.sleep(1000);
         await takeScreenshot(driver, './screenshots/DeleteNumberNotifications.png');
     } finally {

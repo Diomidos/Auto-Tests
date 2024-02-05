@@ -21,28 +21,14 @@ async function AddingNumberNotifications() {
         await driver.sleep(1000);
         await driver.findElement(By.css(".GlobalButton.white.small.isImage")).click();
         await driver.sleep(1000);
-        const textAreaElements1 = await driver.findElement(By.css(".NotificationCard"));
-        await textAreaElements1[5].sendKeys("1234567890", Key.ENTER);
-        // const textAreaElements2 = await driver.findElement(By.css(".PhoneInput"));
-        // await textAreaElements2[1].click();
-
-
-        // await driver.findElement(By.css(".PhoneInput"));
+        const inputFields = await driver.findElements(By.css("input.PhoneInputInput[type='tel'][name='phone']"));
+        await inputFields[0].click();
+        await inputFields[0].sendKeys("1234567890");
         await driver.sleep(1000);
-
-        // await driver.sleep(1000);
-        // await driver.findElement(By.css(".")).click();
-        // const textAreaElements = await driver.findElement(By.css(".PhoneInputInput"));
-        // await textAreaElements[1].sendKeys("1234567890", Key.ENTER);
-        // await textAreaElements(1).sendKeys("1234567890", Key.ENTER);
-        // await driver.sleep(1000);
-        // const textAreaElements1 = await driver.findElement(By.css(".react-tel-input "));
-        // await textAreaElements1(1).sendKeys("1234567890", Key.ENTER);
-
-        // await driver.sleep(1000);
-        // await driver.findElement(By.css(".GlobalButton.orange.regular ")).click();
-
-
+        await driver.findElement(By.css(".NotificationCard__item"));
+        await driver.sleep(1000);
+        const textAreaElements = await driver.findElement(By.css(".GlobalButton.orange.regular"));
+        await textAreaElements[0].click();
 
         await driver.sleep(1000);
         await takeScreenshot(driver, './screenshots/AddingNumberNotifications.png');
