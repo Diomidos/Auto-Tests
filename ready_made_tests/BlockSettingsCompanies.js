@@ -93,57 +93,7 @@ async function ChangeCurrencies(driver) {
     await driver.switchTo().window(handles[handles.length - 2]);
 }
 
-// Тест 3 DeleteNumberNotifications Вход. Страница "Уведомления". Удаление номера уведомления.
-async function DeleteNumberNotifications(driver) {
-    await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
-    const handles = await driver.getAllWindowHandles();
-    await driver.switchTo().window(handles[handles.length - 1]);
-    // Логика теста DeleteNumberNotifications
-    await driver.get(
-        "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
-    );
-    await driver.wait(until.elementLocated(By.css('#chats')));
-    await driver.sleep(1000);
-    await driver.findElement(By.css("#settings")).click();
-    await driver.sleep(1000);
-    await driver.findElement(By.css("a[href='/companies/1/settings/notifications']")).click();
-    await driver.sleep(1000);
-    await driver.findElement(By.css(".GlobalButton.white.small ")).click();
-    await driver.sleep(1000);
-    await driver.findElement(By.css(".actionDialog__bottom button.GlobalButton.orange.regular")).click();
-    await driver.sleep(1000);
-    await takeScreenshot(driver, './screenshots/DeleteNumberNotifications.png');
 
-    async function takeScreenshot(driver, filename) {
-        await driver.takeScreenshot().then(function (data) {
-            fs.writeFileSync(filename, data, 'base64');
-        });
-    }
-    // Закрыть текущую вкладку
-    await driver.close();
-    await driver.switchTo().window(handles[handles.length - 2]);
-}
-
-// Тест 4 AddingNumberNotifications Вход. Страница "Уведомления". Добавление номера уведомления.
-async function AddingNumberNotifications(driver) {
-    await driver.executeScript(`window.open('https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=d393e90d-86f7-42b7-96d0-34cccb99101d&response_mode=fragment&response_type=code&scope=openid&nonce=95335ca7-0e68-4e7e-8565-448ad2c36ccc')`);
-    const handles = await driver.getAllWindowHandles();
-    await driver.switchTo().window(handles[handles.length - 1]);
-    // Логика теста AddingNumberNotifications
-    await driver.get(
-        "https://auth.radist.online/auth/realms/radist/protocol/openid-connect/auth?client_id=web-ui-test&redirect_uri=https%3A%2F%2Fapp-beta.int.radist.online%2Fcompanies%2F1%2Fchats%2F643%2F452367&state=a2095ef3-ee00-4893-8bf6-a596644a6bfa&response_mode=fragment&response_type=code&scope=openid&nonce=d8ba6edb-4e15-4869-850e-17cec5778cd6"
-    );
-    await driver.wait(until.elementLocated(By.css('#chats')));
-
-    async function takeScreenshot(driver, filename) {
-        await driver.takeScreenshot().then(function (data) {
-            fs.writeFileSync(filename, data, 'base64');
-        });
-    }
-    // Закрыть текущую вкладку
-    await driver.close();
-    await driver.switchTo().window(handles[handles.length - 2]);
-}
 
 async function main() {
     const options = new chrome.Options();
@@ -156,8 +106,6 @@ async function main() {
 
     await ChangeOfCompanyName(driver);
     await ChangeCurrencies(driver);
-    await DeleteNumberNotifications(driver);
-    await AddingNumberNotifications(driver);
 
     await driver.quit(); // Закрытие браузера после выполнения тестов
 }

@@ -34,7 +34,7 @@ async function SubscriptionsPaymentLegalEntities() {
         await driver.findElement(By.css('.dropdownContainer__dropdown '));
         await driver.findElement(By.css('.dropdownContainer__dropdown_arrowIcon.false')).click();
         const textAreaElements = await driver.findElements(By.css('.dropdownContainer__dropdown_content__item'));
-        await textAreaElements[2].click();
+        await textAreaElements[0].click();
         await driver.sleep(2000);
         const textAreaElements1 = await driver.findElements(By.css('.GlobalButton.orange.regular'));
         await textAreaElements1[1].click()

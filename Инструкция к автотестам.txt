@@ -1,0 +1,9 @@
+ Инструкция по пользованию:
+1. Установить бибилиотеку node.js
+2. Установить библиотеку "mocha".
+3. npm install mochawesome
+4. npm install moment-timezone
+5. npm install puppeteer
+6. npm i allure-commandline 
+2. Для запуска тестов использовать команду "node test.js".
+3. Важно: Запускаемые тесты должны находится в папке "workingTest".

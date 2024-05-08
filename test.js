@@ -15,7 +15,6 @@ const mocha = new Mocha({
     reportDir: path.join(__dirname, 'test-results'), // путь к папке для сохранения результатов тестов
     reportFilename: `index-${reportName}`, // имя файла отчета с текущей датой и временем
     reportTitle: 'Test Report', // заголовок отчета
-    // autoOpen: false,
   },
 });
 

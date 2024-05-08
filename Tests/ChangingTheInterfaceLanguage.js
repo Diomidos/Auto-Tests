@@ -17,13 +17,14 @@ async function ChangingTheInterfaceLanguage() {
         await driver.sleep(1000);
         await driver.findElement(By.css("a[href='/companies/1/settings/profile']")).click();
         selectNextLanguage(driver);
-        await driver.sleep(1000);
+        await driver.sleep(2000);
         await driver.findElement(By.css('.buttonSave.active'));
-        await driver.sleep(1000);
-        let textAreaElements = await driver.findElements(By.css('.GlobalButton.orange.regular'));
-        await textAreaElements[1].click();
-        await driver.sleep(1000);
-        await takeScreenshot(driver, './screenshots/ChangingTheInterfaceLanguage.png');
+        await driver.sleep(2000);
+        let textAreaElements = await driver.findElements(By.css('.GlobalButton_orange_regular '));
+        await driver.sleep(3000);
+        await textAreaElements[2].click();
+        await driver.sleep(3000);
+        await takeScreenshot(driver, './screenshots/ChangingTheInterfaceLanguage.jpg');
     } finally {
         await driver.quit();
     }
@@ -31,23 +32,40 @@ async function ChangingTheInterfaceLanguage() {
 async function selectNextLanguage(driver) {
     const arrowButton = await driver.findElement(By.css('.uiSelect__arrow'));
     await arrowButton.click();
-    const selectedLanguageIsActive = await driver.findElement(By.css('.uiSelected__text.active'));
+    await driver.sleep(2000);
+    // const selectedLanguageIsActive = await driver.findElement(By.css('.uiSelected__text'));
+    // let selectedLanguage = await selectedLanguageIsActive.getText();
     const selectedLanguageId = await selectedLanguageIsActive.getAttribute('id');
-    let nextLanguageId;
-    if (selectedLanguageId === 'ru' && selectedLanguageIsActive) {
-        nextLanguageId = 'en';
-    } else if (selectedLanguageId === 'en' && selectedLanguageIsActive) {
-        nextLanguageId = 'es';
-    } else if (selectedLanguageId === 'es' && selectedLanguageIsActive) {
-        nextLanguageId = 'ru';
+    // let nextLanguageId;
+
+    if (selectedLanguage === 'ru') {
+        selectedLanguage = 'en';
+    } else if (selectedLanguage === 'en') {
+        selectedLanguage = 'es';
+    } else if (selectedLanguage === 'es') {
+        selectedLanguage = 'ru';
     } else {
-        nextLanguageId = selectedLanguageId;
+        return selectedLanguage;
     }
+
+
+    // if (selectedLanguageId === 'ru' && selectedLanguageIsActive) {
+    //     nextLanguageId = 'en';
+    // } else if (selectedLanguageId === 'en' && selectedLanguageIsActive) {
+    //     nextLanguageId = 'es';
+    // } else if (selectedLanguageId === 'es' && selectedLanguageIsActive) {
+    //     nextLanguageId = 'ru';
+    // } else {
+    //     return nextLanguageId = selectedLanguageId;
+    //     // nextLanguageId = selectedLanguageId;
+    // }
     const languageOption = await driver.findElement(By.css(`[id="${nextLanguageId}"]`));
     await languageOption.click();
+
 }
 async function takeScreenshot(driver, filename) {
     const screenshot = await driver.takeScreenshot();
     fs.writeFileSync(filename, screenshot, 'base64');
 }
+
 ChangingTheInterfaceLanguage();

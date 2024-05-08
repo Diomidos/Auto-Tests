@@ -21,14 +21,44 @@ async function AddingNumberNotifications() {
         await driver.sleep(1000);
         await driver.findElement(By.css(".GlobalButton.white.small.isImage")).click();
         await driver.sleep(1000);
+
         const inputFields = await driver.findElements(By.css("input.PhoneInputInput[type='tel'][name='phone']"));
-        await inputFields[0].click();
-        await inputFields[0].sendKeys("1234567890");
-        await driver.sleep(1000);
-        await driver.findElement(By.css(".NotificationCard__item"));
-        await driver.sleep(1000);
-        const textAreaElements = await driver.findElement(By.css(".GlobalButton.orange.regular"));
-        await textAreaElements[0].click();
+
+        let fieldToFill;
+        for (let i = 0; i < inputFields.length; i++) {
+            const value = await inputFields[i].getAttribute('value');
+            if (value === '') {
+                fieldToFill = i;
+                break;
+            }
+        }
+
+        if (fieldToFill !== undefined) {
+            await inputFields[fieldToFill].click();
+            await inputFields[fieldToFill].sendKeys("1234567890");
+            await driver.sleep(1000);
+            await driver.findElement(By.css(".NotificationCard__item"));
+            // await driver.findElement(By.name('phone')).click();
+            // await driver.findElement(By.name('phone')).sendKeys('1234567890');
+            const inputFields = await driver.findElements(By.css("input.PhoneInputInput[type='tel'][name='phone']"));
+            await inputFields[0].click();
+            await inputFields[0].sendKeys("1234567890");
+
+            // const textAreaElements = await driver.findElement(By.css(".PhoneInputInput"));
+            // await textAreaElements[0].sendKeys("1234567890");
+            await driver.sleep(1000);
+            const textAreaElements1 = await driver.findElement(By.css(".GlobalButton.orange.regular"));
+            await textAreaElements1.click();
+        }
+
+        //     const inputFields = await driver.findElements(By.css("input.PhoneInputInput[type='tel'][name='phone']"));
+        //     await inputFields[0].click();
+        //     await inputFields[0].sendKeys("1234567890");
+        //     await driver.sleep(1000);
+        //     await driver.findElement(By.css(".NotificationCard__item"));
+        //     await driver.sleep(1000);
+        //     const textAreaElements = await driver.findElement(By.css(".GlobalButton.orange.regular"));
+        //     await textAreaElements[0].click();
 
         await driver.sleep(1000);
         await takeScreenshot(driver, './screenshots/AddingNumberNotifications.png');
