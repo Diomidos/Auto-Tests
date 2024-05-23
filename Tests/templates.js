@@ -30,8 +30,6 @@ async function templates() {
     }
 }
 async function takeScreenshot(driver, filename) {
-    await driver.takeScreenshot().then(function (data) {
-        fs.writeFileSync(filename, data, 'base64');
-    });
+    const screenshot = await driver.takeScreenshot();
 }
 templates();
