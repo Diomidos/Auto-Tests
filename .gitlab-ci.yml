@@ -1,0 +1,18 @@
+image: node:latest
+
+stages:
+  - test
+
+cache:
+  paths:
+    - node_modules/p
+test:
+  stage: test
+  script:
+    - npm install
+    - mkdir -p screenshots test-results
+    - node test.js
+  artifacts:
+    paths:
+      - screenshots
+      - test-results
